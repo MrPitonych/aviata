@@ -124,7 +124,7 @@ CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 CELERY_BEAT_SCHEDULE = {
     "get_tickets": {
         "task": "config.tasks.get_tickets",
-        "schedule": crontab(minute=42, hour=21),
+        "schedule": crontab(minute=0, hour=0),
     },
 }
 
