@@ -51,7 +51,6 @@ def ticket_by_direction(
         ticket_date = datetime.utcfromtimestamp(ticket["dTimeUTC"]).strftime(FORMAT)
         key = "{0}_{1}_{2}".format(ticket_date, fly_from, fly_to)
         if cache.get(key) is None:
-            print(key)
             if check_ticket(ticket["booking_token"], number_of_person) != 0:
                 break
             value = {"price": ticket["price"], "booking_token": ticket["booking_token"]}
