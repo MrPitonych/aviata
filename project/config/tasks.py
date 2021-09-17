@@ -49,7 +49,7 @@ def ticket_by_direction(
         ticket_date = datetime.utcfromtimestamp(ticket["dTimeUTC"]).strftime(os.environ.get("DATE_FORMAT"))
         key = f"{ticket_date}_{fly_from}_{fly_to}"
         if cache.get(key) is None:
-            if check_ticket(ticket["booking_token"], number_of_person) != 0:
+            if check_ticket(ticket["booking_token"], number_of_person):
                 break
             value = {"price": ticket["price"], "booking_token": ticket["booking_token"]}
             seconds, minutes, hours = 60, 60, 24
@@ -84,8 +84,8 @@ def check_ticket(booking_token, pnum):
     is_price_changed = check_result["price_change"]
 
     if is_invalid:
-        return 1
+        return True
 
     elif is_price_changed:
-        return 1
-    return 0
+        return True
+    return False
