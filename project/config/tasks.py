@@ -11,8 +11,6 @@ from django.core.cache import cache
 FIRST_CITIES = ['ALA', 'ALA', 'ALA', 'TSE', 'TSE']
 SECOND_CITIES = ['TSE', 'MOW', 'CIT', 'MOW', 'LED']
 
-FORMAT = "%d/%m/%Y"
-
 BOOKING_URL = "https://api.skypicker.com/flights"
 BOOKING_CHECK_URL = "https://booking-api.skypicker.com/api/v0.1/check_flights"
 
@@ -20,7 +18,7 @@ BOOKING_CHECK_URL = "https://booking-api.skypicker.com/api/v0.1/check_flights"
 @shared_task
 def get_tickets():
     today = datetime.today()
-    date_from = today.strftime(FORMAT)
+    date_from = today.strftime(os.environ.get("DATE_FORMAT"))
     date_to = (today + relativedelta(months=1)).strftime("%d/%m/%Y")
 
     for first, second in zip(FIRST_CITIES, SECOND_CITIES):
@@ -48,7 +46,7 @@ def ticket_by_direction(
         return response.text, response.status_code
     tickets = response.json()["data"]
     for ticket in tickets:
-        ticket_date = datetime.utcfromtimestamp(ticket["dTimeUTC"]).strftime(FORMAT)
+        ticket_date = datetime.utcfromtimestamp(ticket["dTimeUTC"]).strftime(os.environ.get("DATE_FORMAT"))
         key = "{0}_{1}_{2}".format(ticket_date, fly_from, fly_to)
         if cache.get(key) is None:
             if check_ticket(ticket["booking_token"], number_of_person) != 0:

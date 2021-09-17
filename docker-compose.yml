@@ -13,6 +13,7 @@ services:
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 0.0.0.0
       - PARTNER=pitonychtest
+      - DATE_FORMAT=%d/%m/%Y
     depends_on:
       - redis
   redis:
@@ -27,6 +28,7 @@ services:
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
       - PARTNER=pitonychtest
+      - DATE_FORMAT=%d/%m/%Y
     depends_on:
       - redis
   celery-beat:
@@ -39,5 +41,6 @@ services:
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
       - PARTNER=pitonychtest
+      - DATE_FORMAT=%d/%m/%Y
     depends_on:
       - redis

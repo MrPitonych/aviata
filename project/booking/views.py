@@ -1,10 +1,12 @@
+import os
+
 from django.core.cache import cache
 from django.http import JsonResponse
 
 
 def get_ticket(request):
     try:
-        date = request.GET["date"]
+        date = request.GET["date"].strftime(os.environ.get("DATE_FORMAT"))
         fly_from = request.GET["fly_from"]
         fly_to = request.GET["fly_to"]
     except KeyError as e:
