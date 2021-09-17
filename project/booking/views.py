@@ -13,7 +13,7 @@ def get_ticket(request):
         print(e)
         return JsonResponse({"message": "Not all required fields"}, status=400)
 
-    ticket = cache.get("{0}_{1}_{2}".format(date, fly_from, fly_to))
+    ticket = cache.get(f"{date}_{fly_from}_{fly_to}")
 
     if not ticket:
         return JsonResponse({"message": "Ticket not found"}, status=404)

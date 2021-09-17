@@ -47,7 +47,7 @@ def ticket_by_direction(
     tickets = response.json()["data"]
     for ticket in tickets:
         ticket_date = datetime.utcfromtimestamp(ticket["dTimeUTC"]).strftime(os.environ.get("DATE_FORMAT"))
-        key = "{0}_{1}_{2}".format(ticket_date, fly_from, fly_to)
+        key = f"{ticket_date}_{fly_from}_{fly_to}"
         if cache.get(key) is None:
             if check_ticket(ticket["booking_token"], number_of_person) != 0:
                 break
