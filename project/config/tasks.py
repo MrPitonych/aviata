@@ -52,7 +52,8 @@ def ticket_by_direction(
             if check_ticket(ticket["booking_token"], number_of_person) != 0:
                 break
             value = {"price": ticket["price"], "booking_token": ticket["booking_token"]}
-            cache.set(key, value, 86401)
+            seconds, minutes, hours = 60, 60, 24
+            cache.set(key, value, (seconds * minutes * hours) + 1)
 
 
 def check_ticket(booking_token, pnum):
